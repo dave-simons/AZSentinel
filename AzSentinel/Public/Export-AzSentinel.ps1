@@ -65,7 +65,7 @@ function Export-AzSentinel {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         $date = Get-Date -Format HHmmss_ddMMyyyy
 
         <#

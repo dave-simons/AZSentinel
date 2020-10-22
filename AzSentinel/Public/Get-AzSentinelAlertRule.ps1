@@ -83,6 +83,7 @@ function Get-AzSentinelAlertRule {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         $uri = "$script:baseUri/providers/Microsoft.SecurityInsights/alertRules?api-version=2020-01-01"
