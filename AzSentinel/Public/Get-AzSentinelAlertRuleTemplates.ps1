@@ -13,6 +13,8 @@ function Get-AzSentinelAlertRuleTemplates {
       Enter the Workspace name
       .PARAMETER Kind
       Enter the Kind to filter on the templates
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Get-AzSentinelAlertRuleTemplates -WorkspaceName ""
       In this example you can get Sentinel alert rules templates in once

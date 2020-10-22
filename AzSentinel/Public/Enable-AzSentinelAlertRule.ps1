@@ -10,6 +10,8 @@ function Enable-AzSentinelAlertRule {
       Enter the Workspace name
       .PARAMETER RuleName
       Enter the name of the Alert rule
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Enable-AzSentinelAlertRule -WorkspaceName "" -RuleName "",""
       In this example you can get configuration of multiple alert rules in once

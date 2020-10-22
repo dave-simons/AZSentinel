@@ -17,6 +17,8 @@ function Add-AzSentinelIncidentComment {
     Enter the case number to get specfiek details of a open case
     .PARAMETER Comment
     Enter Comment tekst to add comment to the incident
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Add-AzSentinelIncidentComment -WorkspaceName "" CaseNumber "" -Comment
     Add a comment to existing incidnet

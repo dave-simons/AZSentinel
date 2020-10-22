@@ -10,6 +10,8 @@ function Set-AzSentinelResourceProvider {
     This function is enables the required Resource providers
     .PARAMETER NameSpace
     Enter the name of the namespace without 'Microsoft.'
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Set-AzSentinelResourceProvider -NameSpace 'OperationsManagementOperationsManagement'
     #>

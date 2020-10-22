@@ -15,6 +15,8 @@ function Get-AzSentinelAlertRuleAction {
       Enter the name of the Alert rule
       .PARAMETER RuleId
       Enter the Rule Id to skip Get-AzSentinelAlertRule step
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Get-AzSentinelAlertRuleAction -WorkspaceName "" -RuleName "testrule01"
       This example will get the Workspace ands return the full data object

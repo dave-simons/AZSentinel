@@ -14,6 +14,8 @@ function Import-AzSentinelHuntingRule {
     Enter the Workspace name
     .PARAMETER SettingsFile
     Path to the JSON or YAML file for the Hunting rules
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Import-AzSentinelHuntingRule -WorkspaceName "infr-weu-oms-t-7qodryzoj6agu" -SettingsFile ".\examples\HuntingRules.json"
     In this example all the rules configured in the JSON file will be created or updated

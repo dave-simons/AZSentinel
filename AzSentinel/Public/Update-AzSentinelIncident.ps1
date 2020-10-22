@@ -25,6 +25,8 @@ function Update-AzSentinelIncident {
     When Status is equil to Closed, CloseReason is required. You can select from: TruePositive, FalsePositive
     .PARAMETER ClosedReasonText
     When Status is equil to Closed, ClosedReasonText is required to be filled in.
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Update-AzSentinelIncident -WorkspaceName ""
     Get a list of all open Incidents

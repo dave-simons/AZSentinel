@@ -13,6 +13,8 @@ function Get-AzSentinelDataConnector {
       Enter the Workspace name
       .PARAMETER DataConnectorName
       Enter the Connector ID
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Get-AzSentinelDataConnector -WorkspaceName ""
       List all  enabled dataconnector

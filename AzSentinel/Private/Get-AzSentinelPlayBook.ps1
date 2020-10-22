@@ -11,6 +11,8 @@ function Get-AzSentinelPlayBook {
       Enter the subscription ID, if no subscription ID is provided then current AZContext subscription will be used
       .PARAMETER Name
       Enter the Logic App name
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Get-AzSentinelPlayBook -Name ""
       This example will get search for the Logic app within the current subscripbtio and test to see if it's compatible for Sentinel

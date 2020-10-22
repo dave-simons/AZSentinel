@@ -17,6 +17,8 @@ function Get-AzSentinelAlertRule {
       The alert rule kind
       .PARAMETER LastModified
       Filter for rules modified after this date/time
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Get-AzSentinelAlertRule -WorkspaceName "" -RuleName "",""
       In this example you can get configuration of multiple alert rules in once

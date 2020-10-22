@@ -14,6 +14,8 @@ function Import-AzSentinelAlertRule {
     Enter the Workspace name
     .PARAMETER SettingsFile
     Path to the JSON or YAML file for the AlertRules
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Import-AzSentinelAlertRule -WorkspaceName "" -SettingsFile ".\examples\AlertRules.json"
     In this example all the rules configured in the JSON file will be created or updated

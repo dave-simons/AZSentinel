@@ -9,6 +9,8 @@ function Get-AzSentinelResourceProvider {
     This function is used to get status of the required resource providers
     .PARAMETER NameSpace
     Enter the name of the namespace without 'Microsoft.'
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Get-AzSentinelResourceProvider -NameSpace 'OperationsManagement'
     #>

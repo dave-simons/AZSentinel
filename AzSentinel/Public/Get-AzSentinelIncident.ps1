@@ -18,6 +18,8 @@ function Get-AzSentinelIncident {
     Enter the case number to get specfiek details of a open case
     .PARAMETER All
     Use -All switch to get a list of all the incidents
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Get-AzSentinelIncident -WorkspaceName ""
     Get a list of the last 200 Incidents

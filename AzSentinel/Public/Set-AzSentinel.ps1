@@ -11,6 +11,8 @@ function Set-AzSentinel {
     Enter the subscription ID, if no subscription ID is provided then current AZContext subscription will be used
     .PARAMETER WorkspaceName
     Enter the Workspace name
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Set-AzSentinel -WorkspaceName ""
     This example will enable Azure Sentinel for the provided workspace

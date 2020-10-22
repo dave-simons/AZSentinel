@@ -13,6 +13,8 @@ function Remove-AzSentinelHuntingRule {
     Enter the Workspace name
     .PARAMETER RuleName
     Enter the name of the rule that you wnat to remove
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Remove-AzSentinelHuntingRule -WorkspaceName "" -RuleName ""
     In this example the defined hunting rule will be removed from Azure Sentinel

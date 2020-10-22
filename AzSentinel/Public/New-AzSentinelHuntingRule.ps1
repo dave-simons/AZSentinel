@@ -19,6 +19,8 @@ function New-AzSentinelHuntingRule {
     Enter the Tactics, valid values: "InitialAccess", "Persistence", "Execution", "PrivilegeEscalation", "DefenseEvasion", "CredentialAccess", "LateralMovement", "Discovery", "Collection", "Exfiltration", "CommandAndControl", "Impact"
     .PARAMETER Query
     Enter the querry in KQL format
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     New-AzSentinelHuntingRule -WorkspaceName "" -DisplayName "" -Description "" -Tactics "","" -Query ''
     In this example you create a new hunting rule by defining the rule properties from CMDLET

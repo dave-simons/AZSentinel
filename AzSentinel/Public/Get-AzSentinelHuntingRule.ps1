@@ -15,6 +15,8 @@ function Get-AzSentinelHuntingRule {
     Enter the name of the Hunting rule name
     .PARAMETER Filter
     Select which type of Hunting rules you want to see. Option: HuntingQueries, GeneralExploration, LogManagement
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Get-AzSentinelHuntingRule -WorkspaceName "" -RuleName "",""
     In this example you can get configuration of multiple Hunting rules

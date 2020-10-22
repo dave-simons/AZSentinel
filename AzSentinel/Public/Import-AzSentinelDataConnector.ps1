@@ -13,6 +13,8 @@ function Import-AzSentinelDataConnector {
     Enter the Workspace name
     .PARAMETER SettingsFile
     Path to the JSON file for the Data Connectors
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Import-AzSentinelDataConnector -WorkspaceName "" -SettingsFile ".\examples\DataConnectors.json"
     In this example all the Data Conenctors configured in the JSON file will be created or updated

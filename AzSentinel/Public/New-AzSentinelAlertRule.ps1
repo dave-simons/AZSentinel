@@ -61,6 +61,8 @@ function New-AzSentinelAlertRule {
     The alerts' severities on which the cases will be generated
     .PARAMETER DisplayNamesFilter
     The alerts' displayNames on which the cases will be generated
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     New-AzSentinelAlertRule -WorkspaceName "" -DisplayName "" -Description "" -Severity -Enabled $true -Query '' -QueryFrequency "" -QueryPeriod "" -TriggerOperator -TriggerThreshold  -SuppressionDuration "" -SuppressionEnabled $false -Tactics @("","") -PlaybookName ""
     Example on how to create a scheduled rule

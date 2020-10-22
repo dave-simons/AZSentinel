@@ -12,6 +12,8 @@ function Get-LogAnalyticWorkspace {
     Enter the Workspace name
     .PARAMETER FullObject
     If you want to return the full object data
+    .PARAMETER Environment
+    Environment containing the Azure subscription
     .EXAMPLE
     Get-LogAnalyticWorkspace -WorkspaceName ""
     This example will get the Workspace and set workspace and baseuri param on Script scope level

@@ -15,6 +15,8 @@ function Rename-AzSentinelAlertRule {
       Enter the current name of the Alert rule
       .PARAMETER NewRuleName
       Enter the new name of the Alert rule
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Rename-AzSentinelAlertRule -WorkspaceName "" -CurrentRuleName "" -NewRuleName ""
       In this example you can rename the alert rule

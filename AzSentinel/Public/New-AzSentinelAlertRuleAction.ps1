@@ -17,6 +17,8 @@ function New-AzSentinelAlertRuleAction {
       Enter the Alert Rule name that you want to configure
       .PARAMETER RuleId
       Enter the Alert Rule ID that you want to configure
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       New-AzSentinelAlertRuleAction -WorkspaceName "" -PlayBookName "Playbook01" -RuleName "AlertRule01"
       New-AzSentinelAlertRuleAction -WorkspaceName "" -PlayBookName "Playbook01" -RuleId 'b6103d42-d2fb-4f35-xxx-c76a7f31ee4e'

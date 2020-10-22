@@ -15,6 +15,8 @@ function Remove-AzSentinelAlertRuleAction {
       Enter the name of the Alert rule
       .PARAMETER RuleId
       Enter the Alert Rule ID that you want to configure
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Remove-AzSentinelAlertRuleAction -WorkspaceName "" -RuleName "AlertRule01"
       This example will get the Workspace ands return the full data object
