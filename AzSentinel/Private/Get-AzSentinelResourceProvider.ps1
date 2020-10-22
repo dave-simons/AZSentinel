@@ -13,10 +13,17 @@ function Get-AzSentinelResourceProvider {
     Get-AzSentinelResourceProvider -NameSpace 'OperationsManagement'
     #>
     param (
-        [string]$NameSpace
-    )
+        [string]$NameSpace,
 
-    $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.$($NameSpace)?api-version=2019-10-01"
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
+    )
+    switch ($Environment) {
+        AzureUsGovernment { $uri = "https://management.usgovcloudapi.net/subscriptions/$($script:subscriptionId)/providers/Microsoft.$($NameSpace)?api-version=2019-10-01" }
+        Default { $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.$($NameSpace)?api-version=2019-10-01" }
+    }
+
 
     try {
         $invokeReturn = Invoke-RestMethod -Method Get -Uri $uri -Headers $script:authHeader

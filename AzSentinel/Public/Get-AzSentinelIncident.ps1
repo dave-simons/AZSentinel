@@ -55,7 +55,11 @@ function Get-AzSentinelIncident {
 
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
-        [Switch]$All
+        [Switch]$All,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -76,6 +80,7 @@ function Get-AzSentinelIncident {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         $uri = "$script:baseUri/providers/Microsoft.SecurityInsights/Cases?api-version=2019-01-01-preview"

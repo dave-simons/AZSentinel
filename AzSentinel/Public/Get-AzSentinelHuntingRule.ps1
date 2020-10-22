@@ -42,7 +42,11 @@ function Get-AzSentinelHuntingRule {
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
         [validateset("Hunting Queries", "Log Management", "General Exploration")]
-        [string]$Filter
+        [string]$Filter,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -63,6 +67,7 @@ function Get-AzSentinelHuntingRule {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         $uri = "$script:baseUri/savedSearches?api-version=2017-04-26-preview"

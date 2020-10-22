@@ -30,7 +30,11 @@ function Import-AzSentinelDataConnector {
 
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateScript( { (Test-Path -Path $_) -and ($_.Extension -in '.json') })]
-        [System.IO.FileInfo] $SettingsFile
+        [System.IO.FileInfo] $SettingsFile,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -52,6 +56,7 @@ function Import-AzSentinelDataConnector {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         if ($SettingsFile.Extension -eq '.json') {

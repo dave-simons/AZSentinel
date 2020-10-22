@@ -40,7 +40,11 @@ function Rename-AzSentinelAlertRule {
         [Parameter(Mandatory = $true,
             ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
-        [string]$NewRuleName
+        [string]$NewRuleName,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -61,7 +65,7 @@ function Rename-AzSentinelAlertRule {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         try {
             $rule = Get-AzSentinelAlertRule @arguments -RuleName $CurrentRuleName -ErrorAction Stop
 

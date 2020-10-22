@@ -25,7 +25,13 @@ function Set-AzSentinel {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$WorkspaceName
+        [string]$WorkspaceName,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
+
+
 
     )
     begin {
@@ -46,6 +52,7 @@ function Set-AzSentinel {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         $workspaceResult = Get-LogAnalyticWorkspace @arguments -FullObject
 
         # Variables
@@ -56,12 +63,14 @@ function Set-AzSentinel {
             <#
             Testing to see if OperationsManagement resource provider is enabled on subscription
             #>
-            $operationsManagementProvider = Get-AzSentinelResourceProvider -NameSpace "OperationsManagement"
+            if (!($Environment)) { $operationsManagementProvider = Get-AzSentinelResourceProvider -NameSpace "OperationsManagement" }
+            else { $operationsManagementProvider = Get-AzSentinelResourceProvider -NameSpace "OperationsManagement" -Environment $Environment }
             if ($operationsManagementProvider.registrationState -ne 'Registered') {
                 Write-Warning "Resource provider 'Microsoft.OperationsManagement' is not registered"
 
                 if ($PSCmdlet.ShouldProcess("Do you want to enable 'Microsoft.OperationsManagement' on subscription $($script:subscriptionId)")) {
-                    Set-AzSentinelResourceProvider -NameSpace 'OperationsManagement'
+                    if (!($Environment)) { Set-AzSentinelResourceProvider -NameSpace 'OperationsManagement' }
+                    else { Set-AzSentinelResourceProvider -NameSpace 'OperationsManagement' -Environment $Environment }
                 }
                 else {
                     Write-Output "No change have been."
@@ -72,12 +81,14 @@ function Set-AzSentinel {
             <#
             Testing to see if SecurityInsights resource provider is enabled on subscription
             #>
-            $securityInsightsProvider = Get-AzSentinelResourceProvider -NameSpace 'SecurityInsights'
+            if (!($Environment)) { $securityInsightsProvider = Get-AzSentinelResourceProvider -NameSpace 'SecurityInsights' }
+            else { $securityInsightsProvider = Get-AzSentinelResourceProvider -NameSpace 'SecurityInsights' -Environment $Environment }
             if ($securityInsightsProvider.registrationState -ne 'Registered') {
                 Write-Warning "Resource provider 'Microsoft.SecurityInsights' is not registered"
 
                 if ($PSCmdlet.ShouldProcess("Do you want to enable 'Microsoft.SecurityInsights' on subscription $($script:subscriptionId)")) {
-                    Set-AzSentinelResourceProvider -NameSpace 'SecurityInsights'
+                    if (!($Environment)) { Set-AzSentinelResourceProvider -NameSpace 'SecurityInsights' }
+                    else { Set-AzSentinelResourceProvider -NameSpace 'SecurityInsights' -Environment $Environment }
                 }
                 else {
                     Write-Output "No change have been."

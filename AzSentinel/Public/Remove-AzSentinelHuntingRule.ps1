@@ -38,7 +38,11 @@ function Remove-AzSentinelHuntingRule {
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
-        [string[]]$RuleName
+        [string[]]$RuleName,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -59,6 +63,7 @@ function Remove-AzSentinelHuntingRule {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         if ($RuleName) {

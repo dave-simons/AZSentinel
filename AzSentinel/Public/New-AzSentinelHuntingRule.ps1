@@ -48,7 +48,11 @@ function New-AzSentinelHuntingRule {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [Tactics[]] $Tactics
+        [Tactics[]] $Tactics,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
 
     )
 
@@ -69,6 +73,7 @@ function New-AzSentinelHuntingRule {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         $item = @{ }

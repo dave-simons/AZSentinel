@@ -24,7 +24,10 @@ function Get-AzSentinelPlayBook {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Name
+        [string]$Name,
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -37,11 +40,17 @@ function Get-AzSentinelPlayBook {
 
         if ($SubscriptionId) {
             Write-Verbose "Getting LogicApp from Subscription $($subscriptionId)"
-            $uri = "https://management.azure.com/subscriptions/$($subscriptionId)/providers/Microsoft.Logic/workflows?api-version=2016-06-01"
+            switch ($EnvironmentName) {
+                AzureUsGovernment { $uri = $uri = "https://management.usgovcloudapi.net/subscriptions/$($subscriptionId)/providers/Microsoft.Logic/workflows?api-version=2016-06-01" }
+                default { $uri = "https://management.usgovcloudapi.net/subscriptions/$($subscriptionId)/providers/Microsoft.Logic/workflows?api-version=2016-06-01" }
+            }
         }
         elseif ($script:subscriptionId) {
             Write-Verbose "Getting LogicApp from Subscription $($script:subscriptionId)"
-            $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.Logic/workflows?api-version=2016-06-01"
+            switch ($EnvironmentName) {
+                AzureUsGovernment { $uri = "https://management.usgovcloudapi.net/subscriptions/$($script:subscriptionId)/providers/Microsoft.Logic/workflows?api-version=2016-06-01" }
+                default { $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.Logic/workflows?api-version=2016-06-01" }
+            }
         }
         else {
             $return = "No SubscriptionID provided"
@@ -57,7 +66,11 @@ function Get-AzSentinelPlayBook {
             }
             $playBook = $logicapp | Where-Object { $_.name -eq $Name }
             if ($playBook){
-                $uri1 = "https://management.azure.com$($playBook.id)/triggers/$($triggerName)/listCallbackUrl?api-version=2016-06-01"
+                switch ($EnvironmentName) {
+                    AzureUsGovernment { $uri1 = "https://management.usgovcloudapi.net$($playBook.id)/triggers/$($triggerName)/listCallbackUrl?api-version=2016-06-01" }
+                    default { $uri1 = "https://management.azure.com$($playBook.id)/triggers/$($triggerName)/listCallbackUrl?api-version=2016-06-01" }
+                }
+
                 try {
                     $playbookTrigger = (Invoke-RestMethod -Uri $uri1 -Method Post -Headers $script:authHeader)
                     $playbookTrigger | Add-Member -NotePropertyName ResourceId -NotePropertyValue $playBook.id -Force

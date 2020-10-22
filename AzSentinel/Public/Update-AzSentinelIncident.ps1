@@ -75,10 +75,14 @@ function Update-AzSentinelIncident {
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
         [string]$ClosedReasonText,
-		
+
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [string]$Description
+        [string]$Description,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -99,6 +103,8 @@ function Update-AzSentinelIncident {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
+
         Write-Verbose -Message "Using URI: $($uri)"
 
         $incident = Get-AzSentinelIncident @arguments -CaseNumber $CaseNumber
@@ -134,7 +140,7 @@ function Update-AzSentinelIncident {
                         "closedReasonText"                         = if ($Status -eq 'Closed') { if ($ClosedReasonText) { $ClosedReasonText } else { Write-Error 'No closed comment provided' } } else { $null }
                         [pscustomobject]"labels"                   = @( $LabelsUnique)
                         "title"                                    = $($incident.title)
-                        "description"                              = if ($Description) { $Description } else { $incident.Description } 
+                        "description"                              = if ($Description) { $Description } else { $incident.Description }
                         "firstAlertTimeGenerated"                  = $incident.FirstAlertTimeGenerated
                         "lastAlertTimeGenerated"                   = $incident.LastAlertTimeGenerated
                         "owner"                                    = @{

@@ -33,7 +33,11 @@ function Get-AzSentinelAlertRuleTemplates {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [Kind[]]$Kind
+        [Kind[]]$Kind,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -54,6 +58,7 @@ function Get-AzSentinelAlertRuleTemplates {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         $uri = "$script:baseUri/providers/Microsoft.SecurityInsights/alertRuleTemplates?api-version=2019-01-01-preview"

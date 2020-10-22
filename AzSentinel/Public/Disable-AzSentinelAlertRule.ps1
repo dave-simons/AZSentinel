@@ -28,7 +28,11 @@ function Disable-AzSentinelAlertRule {
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
-        [string[]]$RuleName
+        [string[]]$RuleName,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -49,7 +53,7 @@ function Disable-AzSentinelAlertRule {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         $rules = Get-AzSentinelAlertRule @arguments -RuleName $RuleName
 
         foreach ($rule in $rules) {

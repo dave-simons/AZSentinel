@@ -35,7 +35,11 @@ function Get-LogAnalyticWorkspace {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [Switch]$FullObject
+        [Switch]$FullObject,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -45,11 +49,17 @@ function Get-LogAnalyticWorkspace {
     process {
         if ($SubscriptionId) {
             Write-Verbose "Getting Worspace from Subscription $($subscriptionId)"
-            $uri = "https://management.azure.com/subscriptions/$($subscriptionId)/providers/Microsoft.OperationalInsights/workspaces?api-version=2015-11-01-preview"
+            switch ($Environment) {
+                AzureUsGovernment { $uri = "https://management.usgovcloudapi.net/subscriptions/$($subscriptionId)/providers/Microsoft.OperationalInsights/workspaces?api-version=2015-11-01-preview" }
+                Default { $uri = "https://management.azure.com/subscriptions/$($subscriptionId)/providers/Microsoft.OperationalInsights/workspaces?api-version=2015-11-01-preview" }
+            }
         }
         elseif ($script:subscriptionId) {
             Write-Verbose "Getting Worspace from Subscription $($script:subscriptionId)"
-            $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.OperationalInsights/workspaces?api-version=2015-11-01-preview"
+            switch ($Environment) {
+                AzureUsGovernment { $uri = "https://management.usgovcloudapi.net/subscriptions/$($script:subscriptionId)/providers/Microsoft.OperationalInsights/workspaces?api-version=2015-11-01-preview" }
+                Default { $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.OperationalInsights/workspaces?api-version=2015-11-01-preview" }
+            }
         }
         else {
             Write-Error "No SubscriptionID provided" -ErrorAction Stop
@@ -62,7 +72,10 @@ function Get-LogAnalyticWorkspace {
             $Script:workspace = ($workspaceObject.id).trim()
             $script:workspaceId = $workspaceObject.properties.customerId
             Write-Verbose "Workspace is: $($Script:workspace)"
-            $script:baseUri = "https://management.azure.com$($Script:workspace)"
+            switch ($Environment) {
+                AzureUsGovernment { $script:baseUri = "https://management.usgovcloudapi.net$($Script:workspace)" }
+                Default { $script:baseUri = "https://management.azure.com$($Script:workspace)" }
+            }
             if ($FullObject) {
                 return $workspaceObject
             }

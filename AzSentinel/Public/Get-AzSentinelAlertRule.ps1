@@ -49,7 +49,11 @@ function Get-AzSentinelAlertRule {
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
-        [DateTime]$LastModified
+        [DateTime]$LastModified,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -95,7 +99,6 @@ function Get-AzSentinelAlertRule {
                 foreach ($rule in $RuleName) {
                     [PSCustomObject]$temp = $alertRules.value | Where-Object { $_.properties.displayName -eq $rule }
                     if ($null -ne $temp) {
-
                         $playbook = Get-AzSentinelAlertRuleAction @arguments -RuleId $temp.name
 
                         if ($playbook) {
@@ -126,7 +129,6 @@ function Get-AzSentinelAlertRule {
                 foreach ($rule in $Kind) {
                     [PSCustomObject]$temp = $alertRules.value | Where-Object { $_.Kind -eq $rule }
                     if ($null -ne $temp) {
-
                         $playbook = Get-AzSentinelAlertRuleAction @arguments -RuleId ($temp.name)[0]
 
                         if ($playbook) {

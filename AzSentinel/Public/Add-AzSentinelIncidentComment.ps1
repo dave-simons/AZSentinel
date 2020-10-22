@@ -45,7 +45,11 @@ function Add-AzSentinelIncidentComment {
 
         [Parameter(Mandatory)]
         [ValidateNotNullOrEmpty()]
-        [string]$Comment
+        [string]$Comment,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -66,6 +70,7 @@ function Add-AzSentinelIncidentComment {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
 
         Write-Verbose -Message "Using URI: $($uri)"
 

@@ -37,7 +37,11 @@ function Get-AzSentinelAlertRuleAction {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [string]$RuleId
+        [string]$RuleId,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -58,7 +62,7 @@ function Get-AzSentinelAlertRuleAction {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         if ($RuleName) {
             $alertId = (Get-AzSentinelAlertRule @arguments -RuleName $RuleName).name
         }

@@ -162,7 +162,11 @@ function New-AzSentinelAlertRule {
         [string]$SeveritiesFilter,
 
         [Parameter(Mandatory = $false)]
-        [string]$DisplayNamesFilter
+        [string]$DisplayNamesFilter,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -183,7 +187,7 @@ function New-AzSentinelAlertRule {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         $item = @{ }
 
         Write-Verbose -Message "Creating new rule: $($DisplayName)"

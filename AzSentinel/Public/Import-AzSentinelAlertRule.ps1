@@ -60,7 +60,11 @@ function Import-AzSentinelAlertRule {
 
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateScript( { (Test-Path -Path $_) -and ($_.Extension -in '.json', '.yaml', '.yml') })]
-        [System.IO.FileInfo] $SettingsFile
+        [System.IO.FileInfo] $SettingsFile,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -81,7 +85,7 @@ function Import-AzSentinelAlertRule {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         if ($SettingsFile.Extension -eq '.json') {
             try {
                 $rulesRaw = Get-Content $SettingsFile -Raw

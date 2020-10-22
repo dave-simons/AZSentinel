@@ -39,7 +39,11 @@ function Remove-AzSentinelAlertRuleAction {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [string]$RuleId
+        [string]$RuleId,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -60,7 +64,7 @@ function Remove-AzSentinelAlertRuleAction {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         if ($RuleName) {
             $result = Get-AzSentinelAlertRuleAction @arguments -RuleName $RuleName
         }

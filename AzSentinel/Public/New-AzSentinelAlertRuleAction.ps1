@@ -44,7 +44,11 @@ function New-AzSentinelAlertRuleAction {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [string]$RuleId
+        [string]$RuleId,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
     process {
         switch ($PsCmdlet.ParameterSetName) {
@@ -60,7 +64,7 @@ function New-AzSentinelAlertRuleAction {
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         if ($RuleName) {
             $alertId = (Get-AzSentinelAlertRule @arguments -RuleName $RuleName -ErrorAction SilentlyContinue).name
         }

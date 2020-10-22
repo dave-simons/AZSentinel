@@ -16,16 +16,26 @@ function Set-AzSentinelResourceProvider {
 
     [OutputType([String])]
     param (
-        [string]$NameSpace
+        [string]$NameSpace,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
-    $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.$($NameSpace)/register?api-version=2019-10-01"
+    switch ($EnvironmentName) {
+        AzureUsGovernment { $uri = "https://management.usgovcloudapi.net/subscriptions/$($script:subscriptionId)/providers/Microsoft.$($NameSpace)/register?api-version=2019-10-01" }
+        Default { $uri = "https://management.azure.com/subscriptions/$($script:subscriptionId)/providers/Microsoft.$($NameSpace)/register?api-version=2019-10-01" }
+    }
 
     try {
         $invokeReturn = Invoke-RestMethod -Method Post -Uri $uri -Headers $script:authHeader
         Write-Verbose $invokeReturn
         do {
-            $resourceProviderStatus = Get-AzSentinelResourceProvider -NameSpace $NameSpace
+            switch ($Environment) {
+                AzureUsGovernment { $resourceProviderStatus = Get-AzSentinelResourceProvider -NameSpace $NameSpace -Environment AzureUsGovernment }
+                Default { $resourceProviderStatus = Get-AzSentinelResourceProvider -NameSpace $NameSpace }
+            }
         }
         until ($resourceProviderStatus.registrationState -eq 'Registered')
         $return = "Successfully enabled Microsoft.$($NameSpace) on subscription $($script:subscriptionId). Status:$($resourceProviderStatus.registrationState)"

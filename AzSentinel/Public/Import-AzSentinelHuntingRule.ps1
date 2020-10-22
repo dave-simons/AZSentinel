@@ -38,7 +38,11 @@ function Import-AzSentinelHuntingRule {
 
         [Parameter(Mandatory, ValueFromPipeline)]
         [ValidateScript( { (Test-Path -Path $_) -and ($_.Extension -in '.json', '.yaml', '.yml') })]
-        [System.IO.FileInfo] $SettingsFile
+        [System.IO.FileInfo] $SettingsFile,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -59,6 +63,7 @@ function Import-AzSentinelHuntingRule {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         $item = @{ }

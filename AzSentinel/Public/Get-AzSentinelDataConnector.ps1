@@ -39,7 +39,11 @@ function Get-AzSentinelDataConnector {
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
-        [DataSourceName[]]$DataSourceName
+        [DataSourceName[]]$DataSourceName,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -60,6 +64,7 @@ function Get-AzSentinelDataConnector {
                 }
             }
         }
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         Get-LogAnalyticWorkspace @arguments
 
         if ($DataConnectorName) {

@@ -28,7 +28,11 @@ function Enable-AzSentinelAlertRule {
         [Parameter(Mandatory = $false,
             ValueFromPipeline)]
         [ValidateNotNullOrEmpty()]
-        [string[]]$RuleName
+        [string[]]$RuleName,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
     )
 
     begin {
@@ -45,11 +49,11 @@ function Enable-AzSentinelAlertRule {
             }
             default {
                 $arguments = @{
-                    WorkspaceName = $WorkspaceName
+                    WorkspaceName  = $WorkspaceName
                 }
             }
         }
-
+        if ($Environment) { $arguments.Add('Environment',$Environment) }
         $rules = Get-AzSentinelAlertRule @arguments -RuleName $RuleName -ErrorAction Stop
 
         foreach ($rule in $rules) {
