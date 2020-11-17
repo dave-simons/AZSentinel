@@ -67,7 +67,13 @@ function Get-AzSentinelDataConnector {
             }
         }
         if ($Environment) { $arguments.Add('Environment',$Environment) }
-        Get-LogAnalyticWorkspace @arguments
+        try {
+            Get-LogAnalyticWorkspace @arguments -ErrorAction Stop
+        }
+        catch {
+            Write-Error $_.Exception.Message
+            break
+        }
 
         if ($DataConnectorName) {
             $dataConnectors = @()

@@ -55,7 +55,12 @@ function Set-AzSentinel {
             }
         }
         if ($Environment) { $arguments.Add('Environment',$Environment) }
-        $workspaceResult = Get-LogAnalyticWorkspace @arguments -FullObject
+        try {
+            $workspaceResult = Get-LogAnalyticWorkspace @arguments -FullObject -ErrorAction Stop
+        } catch {
+            Write-Error $_.Exception.Message
+            break
+        }
 
         # Variables
         $errorResult = ''

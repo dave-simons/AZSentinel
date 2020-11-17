@@ -100,12 +100,10 @@ function Disable-AzSentinelAlertRule {
 
                 $body = [AlertRule]::new( $rule.name, $rule.etag, $bodyAlertProp, $rule.Id, 'Scheduled')
 
-
                 try {
                     $result = Invoke-webrequest -Uri $uri -Method Put -Headers $script:authHeader -Body ($body | ConvertTo-Json -Depth 10 -EnumsAsStrings)
                     Write-Verbose $result
                     Write-Output "Status of '$($rule.DisplayName)' changed to '$($rule.enabled)'"
-
                 }
                 catch {
                     Write-Error $_.Exception.Message

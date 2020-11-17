@@ -70,7 +70,13 @@ function Get-AzSentinelHuntingRule {
             }
         }
         if ($Environment) { $arguments.Add('Environment',$Environment) }
-        Get-LogAnalyticWorkspace @arguments
+        try {
+            Get-LogAnalyticWorkspace @arguments -ErrorAction Stop
+        }
+        catch {
+            Write-Error $_.Exception.Message
+            break
+        }
 
         $uri = "$script:baseUri/savedSearches?api-version=2017-04-26-preview"
 

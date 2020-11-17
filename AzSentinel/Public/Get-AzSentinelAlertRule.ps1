@@ -128,7 +128,6 @@ function Get-AzSentinelAlertRule {
                             $_.properties | Add-Member -NotePropertyName playbookName -NotePropertyValue $playbookName -Force
                         }
 
-
                         $return += $_.properties
                     }
                 }

@@ -67,8 +67,14 @@ function Get-LogAnalyticWorkspace {
             Write-Error "No SubscriptionID provided" -ErrorAction Stop
         }
 
-        $workspaces = Invoke-webrequest -Uri $uri -Method get -Headers $script:authHeader
-        $workspaceObject = ($workspaces.Content | ConvertFrom-Json).value | Where-Object { $_.name -eq $WorkspaceName }
+        try {
+            $workspaces = Invoke-webrequest -Uri $uri -Method get -Headers $script:authHeader -ErrorAction Stop
+            $workspaceObject = ($workspaces.Content | ConvertFrom-Json).value | Where-Object { $_.name -eq $WorkspaceName }
+        }
+        catch {
+            Write-Error $_.Exception.Message
+            break
+        }
 
         if ($workspaceObject) {
             $Script:workspace = ($workspaceObject.id).trim()
@@ -85,7 +91,7 @@ function Get-LogAnalyticWorkspace {
             Write-Verbose "Found Workspace $WorkspaceName in RG $($workspaceObject.id.Split('/')[4])"
         }
         else {
-            Write-Error "Unable to find workspace $WorkspaceName under Subscription Id: $($script:subscriptionId)" -ErrorAction Stop
+            Write-Error "Unable to find workspace $WorkspaceName under Subscription Id: $($script:subscriptionId)"
         }
     }
 }
