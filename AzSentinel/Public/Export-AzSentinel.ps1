@@ -14,6 +14,8 @@ function Export-AzSentinel {
       The Path where you want to export the JSON files
       .PARAMETER TemplatesKind
       Select which Kind of templates you want to export, if empy all Templates will be exported
+      .PARAMETER Environment
+      Environment containing the Azure subscription
       .EXAMPLE
       Export-AzSentinel -WorkspaceName '' -Path C:\Temp\ -Kind All
       In this example you export Alert, Hunting and Template rules
@@ -44,7 +46,12 @@ function Export-AzSentinel {
 
         [Parameter(Mandatory = $false)]
         [ValidateNotNullOrEmpty()]
-        [Kind[]]$TemplatesKind
+        [Kind[]]$TemplatesKind,
+
+        [Parameter()]
+        [ValidateSet("AzureUsGovernment")]
+        [string]$Environment
+
     )
 
     begin {
